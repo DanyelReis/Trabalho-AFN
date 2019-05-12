@@ -4,7 +4,7 @@
 ===========================================
 
 Alfabetos:
-010110010110
+01
 
 Estados:
 q0 q1 q2 q3 
@@ -20,8 +20,8 @@ Transicoes:
 (q3,1)--> q3
 
 
-Estado inicial: q0
-Estado final: q4
+Estado inicial: ['q1']
+Estado final: q0
 QxE->Q
 
 
