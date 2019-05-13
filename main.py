@@ -2,34 +2,37 @@
 
 class AFN():
     def __init__(self):
-        self.numero_de_estados = 4
-        self.numero_de_alfabetos = 2
-        self.numero_de_estados_finais = 1
+        self.estados = ''
+        self.numero_de_estados = 0
+        self.numero_de_alfabetos = 0
+        self.numero_de_estados_finais = 0
         self.estado_inicial = 0
-        self.estado_final = 1
+        self.estado_final = 0
         self.alfabetos = ['0', '1']
         self.afn = [[0 for x in range(int(self.numero_de_alfabetos))] for y in range(int(self.numero_de_estados))]
         self.afn = [['1', '0'], ['1', '2'], ['2', '2']]
+        self.transition = ''
+        self.entrada = ''
 
     def setAfn(self):
-        self.numero_de_estados = 4
-        self.numero_de_alfabetos = 2
-        self.numero_de_estados_finais = 1
-        self.estado_inicial = 'q1'
-        self.estado_final = '4'
-
-        arquivo_entrada_automato = open('AFN/arquivos/arquivo_entrada_automato.txt', 'r')
-        for automato in arquivo_entrada_automato:
-            self.alfabetos = [0 for x in range(int(self.numero_de_alfabetos))]
-            for i in range(0, int(self.numero_de_alfabetos)):
-                self.alfabetos[i]= automato
-    
+        
+        input = open('AFN/arquivos/input.txt', 'r')
+        self.estados = (input.readline().split('#')[0]).split()
+        self.numero_de_estados = len(self.estados)
+        self.alfabetos = (input.readline().split('#')[0]).split()
+        self.numero_de_alfabetos = len(self.alfabetos)
+        self.estado_inicial = (input.readline().split('#')[0]).split()
+        self.estados_finais = (input.readline().split('#')[0]).split()
+        self.numero_de_estados_finais = len(self.estados_finais)
         self.afn = [[0 for x in range(int(self.numero_de_alfabetos))] for y in range(int(self.numero_de_estados))]
 
-        print("Presione Enter para as transições:")
+        
+
         for i in range(0,int(self.numero_de_estados)):
             for j in range(0, int(self.numero_de_alfabetos)):
-                self.afn[i][j] = input("(q"+str(i)+","+str(j)+")--> q" + str(i))
+                self.transition = (input.readline().split('#')[0]).split()
+                if self.transition == '*' : self.transition = ''             
+                self.afn[i][j] = self.transition       
 
     def setarParametros(self, ns, na, nf, fs, ff, a, d):
         self.numero_de_estados = ns
@@ -41,40 +44,40 @@ class AFN():
         self.afn = d
 
     def mostrarSet(self):
-        arquivo_saida_resultado = open('AFN/arquivos/arquivo_saida_resultado.txt','w')
-        arquivo_saida_resultado.write("\n")
-        arquivo_saida_resultado.write("===========================================\n")
-        arquivo_saida_resultado.write("               AFN - INICIO                \n")
-        arquivo_saida_resultado.write("===========================================\n")
+        output = open('AFN/arquivos/output.txt','w')
+        output.write("\n")
+        output.write("===========================================\n")
+        output.write("               AFN - INICIO                \n")
+        output.write("===========================================\n")
         
-        arquivo_saida_resultado.write("\n")
+        output.write("\n")
         
-        arquivo_saida_resultado.write("Alfabetos:\n")
+        output.write("Alfabetos:\n")
         for i in range(0, int(self.numero_de_alfabetos)):
-            arquivo_saida_resultado.write(self.alfabetos[i]),
-        arquivo_saida_resultado.write("\n")
-        arquivo_saida_resultado.write("\n")
+            output.write(self.alfabetos[i]),
+        output.write("\n")
+        output.write("\n")
 
-        arquivo_saida_resultado.write("Estados:\n")
+        output.write("Estados:\n")
         for i in range(0, int(self.numero_de_estados)):
-            arquivo_saida_resultado.write("q"+str(i)+" "),
-        arquivo_saida_resultado.write("\n")
-        arquivo_saida_resultado.write("\n")
+            output.write("q"+str(i)+" "),
+        output.write("\n")
+        output.write("\n")
         
-        arquivo_saida_resultado.write("Transicoes:\n")
+        output.write("Transicoes:\n")
         for i in range(0,int(self.numero_de_estados)):
             for j in range(0, int(self.numero_de_alfabetos)):
-                arquivo_saida_resultado.write("(q"+str(i)+","+str(j)+")--> q" + str(i) + "\n")
-        arquivo_saida_resultado.write("\n")
+                output.write("(q"+str(i)+","+str(j)+")--> q" + str(i) + "\n")
+        output.write("\n")
 
-        arquivo_saida_resultado.write("\nEstado inicial: q0")
-        arquivo_saida_resultado.write("\nEstado final: q"+str(self.estado_final))
-        arquivo_saida_resultado.write("\nQxE->Q\n\n")
+        output.write("\nEstado inicial: " + str(self.estado_inicial))
+        output.write("\nEstado final: q"+str(self.estado_final))
+        output.write("\nQxE->Q\n\n")
 
-        arquivo_saida_resultado.write("\n")
-        arquivo_saida_resultado.write("===========================================\n")
-        arquivo_saida_resultado.write("               AFN - FIM!                  \n")
-        arquivo_saida_resultado.write("===========================================\n")
+        output.write("\n")
+        output.write("===========================================\n")
+        output.write("               AFN - FIM!                  \n")
+        output.write("===========================================\n")
         
 
 if __name__ == "__main__":
